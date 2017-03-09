@@ -34,16 +34,16 @@ load("scripts/libraries/rx.all.js"); // TODO should not start with 'scripts/'
  * Proxy for converting ICECP channels to RxJS Observables; also, more info at 
  * https://medium.com/@benlesh/hot-vs-cold-observables-f8094ed53339#.phh8roa5a
  * @param {String} uri the URI of the channel to subscribe to
- * @returns {DeapChannelObservable}
+ * @returns {IcecpChannelObservable}
  */
-var DeapChannelObservable = (function () {
+var IcecpChannelObservable = (function () {
     "use strict";
     /**
      * @param {Node} node_
      * @param {String} uri_
-     * @returns {DeapChannelObservable}
+     * @returns {IcecpChannelObservable}
      */
-    function DeapChannelObservable(node_, uri_) {
+    function IcecpChannelObservable(node_, uri_) {
         this.observers = [];
         this.node = node_;
         var obs = this.observers;
@@ -62,7 +62,7 @@ var DeapChannelObservable = (function () {
     /**
      * @returns {Rx.Observable} the underlying RxJS observable; will not publish messages until start is called
      */
-    DeapChannelObservable.prototype.getObservable = function () {
+    IcecpChannelObservable.prototype.getObservable = function () {
         return this.observable;
     };
 
@@ -70,7 +70,7 @@ var DeapChannelObservable = (function () {
      * Binds the channel data to the RxJS observable; opens a new ICECP channel subscription
      * @returns {Rx.Observable} the underlying RxJS observable
      */
-    DeapChannelObservable.prototype.start = function () {
+    IcecpChannelObservable.prototype.start = function () {
         var importer = new JavaImporter(com.intel.icecp.core.metadata,
             com.intel.icecp.core.messages,
             com.intel.icecp.core.misc,
@@ -94,12 +94,12 @@ var DeapChannelObservable = (function () {
      * Unbinds the ICECP channel subscription from the RxJS observable
      * @returns {undefined}
      */
-    DeapChannelObservable.prototype.stop = function () {
+    IcecpChannelObservable.prototype.stop = function () {
         this.observers.forEach(function(o){ o.complete(o); });
         this.channel.close();
     };
 
-    return DeapChannelObservable;
+    return IcecpChannelObservable;
 })();
 
 

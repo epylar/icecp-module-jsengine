@@ -66,11 +66,11 @@ var Algorithm = (function () {
     /**
      * Add a channel to the set of channels observed by this algorithm
      * @param {String} uri the URI of the channel to subscribe to
-     * @returns {DeapChannelObservable} an RxJS-compatible Observable passing all observed messages
+     * @returns {IcecpChannelObservable} an RxJS-compatible Observable passing all observed messages
      */
     Algorithm.prototype.addInputChannel = function (uri) {
         LOGGER.info("Adding input channel: ", uri);
-        var dco = new DeapChannelObservable(node, uri);
+        var dco = new IcecpChannelObservable(node, uri);
         this.inputChannels.push(dco);
         return dco.getObservable();
     };
@@ -78,11 +78,11 @@ var Algorithm = (function () {
     /**
      * Add a channel to the set of channels published to by this algorithm
      * @param {String} uri the URI of the channel to publish to
-     * @returns {DeapChannelPublisher} a JS helper class for translating and publishing JSON objects
+     * @returns {IcecpChannelPublisher} a JS helper class for translating and publishing JSON objects
      */
     Algorithm.prototype.addOutputChannel = function (uri) {
         LOGGER.info("Adding output channel: ", uri);
-        var dcp = new DeapChannelPublisher(node, uri);
+        var dcp = new IcecpChannelPublisher(node, uri);
         this.outputChannels.push(dcp);
         return dcp;
     };

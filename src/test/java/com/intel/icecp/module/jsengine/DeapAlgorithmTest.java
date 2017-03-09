@@ -61,7 +61,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DeapAlgorithmTest {
+public class IcecpAlgorithmTest {
     private static final Logger LOGGER = LogManager.getLogger();
     private ScriptRunner instance;
     private Node node;
@@ -101,7 +101,7 @@ public class DeapAlgorithmTest {
 
 
     @Test
-    public void testDeapAlgorithmMultiplyIntegers() throws Exception {
+    public void testIcecpAlgorithmMultiplyIntegers() throws Exception {
         IntegerMessage a = new IntegerMessage(1), b = new IntegerMessage(2),
                 c = new IntegerMessage(3), d = new IntegerMessage(4);
         CountDownLatch expectedMessageCount = new CountDownLatch(2);

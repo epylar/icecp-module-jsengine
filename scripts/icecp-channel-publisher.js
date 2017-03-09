@@ -32,14 +32,14 @@
 /**
  * Helper for translating and publishing JSON objects to ICECP channels
  * @param {String} uri the URI of the channel to publish to
- * @returns {DeapChannelPublisher}
+ * @returns {IcecpChannelPublisher}
  */
-var DeapChannelPublisher = (function () {
+var IcecpChannelPublisher = (function () {
     /**
      * @param {Node} node_
      * @param {String} uri_
      */
-    function DeapChannelPublisher(node_, uri_) {
+    function IcecpChannelPublisher(node_, uri_) {
         this.node = node_;
         this.started = false;
         this.uri = uri_;
@@ -51,7 +51,7 @@ var DeapChannelPublisher = (function () {
      * @param {any} jsonMessage a valid JSON entity (not necessarily an object)
      * @returns {undefined}
      */
-    DeapChannelPublisher.prototype.publish = function (jsonMessage) {
+    IcecpChannelPublisher.prototype.publish = function (jsonMessage) {
         if (!this.started) {
             LOGGER.error("Attempted to publish message in stopped state");
         }
@@ -60,16 +60,16 @@ var DeapChannelPublisher = (function () {
         this.channel.publish(importer.JsJsonMessage.makeJsJsonMessage(jsonMessage));
     };
 
-    DeapChannelPublisher.prototype.start = function () {
+    IcecpChannelPublisher.prototype.start = function () {
         var importer = new JavaImporter(com.intel.icecp.core.metadata, com.intel.icecp.core.messages, com.intel.icecp.core.misc);
         var URI = Java.type("java.net.URI");
         this.channel = node.openChannel(new URI(this.uri), importer.BytesMessage.class, importer.Persistence.DEFAULT);
         this.started = true;
     };
 
-    DeapChannelPublisher.prototype.stop = function () {
+    IcecpChannelPublisher.prototype.stop = function () {
         this.started = false;
     };
 
-    return DeapChannelPublisher;
+    return IcecpChannelPublisher;
 })();
